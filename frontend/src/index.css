@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+@config "../tailwind.config.js";
+
+html, body {
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+@keyframes slowZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.15); }
+}
+@keyframes softFadeIn {
+    from { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.animate-zoom {
+    animation: slowZoom 20s ease-out forwards;
+}
+.animate-fade-up {
+    animation: softFadeIn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.animate-fade-delayed {
+    animation: softFadeIn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+    opacity: 0;
+}
+.glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.spring-interaction {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.spring-interaction:active {
+    transform: scale(0.96);
+}
+.glass-panel2 {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.verify{
+    background-color: #131313;
+    color: #e2e2e2;
+}
+.glass-input {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.glass-card {
+    background: rgba(18, 18, 18, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+::-webkit-scrollbar {
+            display: none;
+}
+.ambient-glow {
+        box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.6);
+}
+.active-glow {
+    color: #FF5F1F !important;
+    filter: drop-shadow(0 0 8px rgba(255, 95, 31, 0.8));
+    opacity: 1 !important;
+    scale: 1.1;
+}
+.active-glow-text {
+    color: #FF5F1F !important;
+    text-shadow: 0 0 10px rgba(255, 95, 31, 0.4);
+    opacity: 1 !important;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.glass-card2 {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.category-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+}
