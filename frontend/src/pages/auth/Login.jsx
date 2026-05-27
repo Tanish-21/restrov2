@@ -1,8 +1,46 @@
 import React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError("");
+
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/api/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+        
+            if (response.ok) {
+                if (data.token) {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("user", data.user);
+                }
+                navigate("/home");
+            } else {
+                setError(data.message || "Login failed. Please try again.");
+            }
+        } catch (err) {
+            setError("An error occurred. Please try again.");
+        }
+    }
+
     return (
         <div className="bg-[#000000] text-on-background font-body-md min-h-screen flex flex-col selection:bg-primary selection:text-on-primary">
             <header className="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-black/40 backdrop-blur-md">
@@ -27,21 +65,46 @@ const Login = () => {
                         </div>
                     </div>
                     <div className="glass-panel1 p-8 rounded-2xl shadow-xl">
-                        <form className="space-y-stack-md" onSubmit={(e) => e.preventDefault()}>
+                        <form className="space-y-stack-md" onSubmit={handleLogin}>
+                            {error && (
+                                <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg text-sm">
+                                    {error}
+                                </div>
+                            )}
                             <div className="space-y-3">
-                                <label className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider px-1" htmlFor="mobile">
-                                    Mobile Number
+                                <label className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider px-1" htmlFor="email">
+                                    Email
                                 </label>
                                 <div className="relative flex items-center group">
-                                    <span className="absolute left-4 text-on-surface-variant font-body-md border-r border-white/10 pr-3">+91</span>
-                                    <input className="w-full bg-surface-container-low border border-white/10 rounded-xl pl-16 pr-4 py-4 text-on-background placeholder:text-white/20 focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all outline-none text-lg tracking-widest" id="mobile" maxLength={10} pattern="[0-9]{10}" placeholder="0000000000" required type="tel" />
+                                    <input 
+                                        className="w-full bg-surface-container-low border border-white/10 rounded-xl px-4 py-4 text-on-background placeholder:text-white/20 focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all outline-none text-lg" 
+                                        id="email" 
+                                        placeholder="Enter your email" 
+                                        
+                                        type="email" 
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
                                 </div>
-                                <p className="text-[11px] text-on-surface-variant/50 px-1 leading-relaxed">
-                                    A 6-digit verification code will be sent via SMS
-                                </p>
                             </div>
-                            <button className="w-full bg-primary-container text-white font-bold py-4.5 rounded-xl shadow-lg shadow-primary-container/20 spring-interaction hover:brightness-110 active:brightness-90 transition-all mt-6 text-lg" type="submit" onClick={() => navigate('/verify')}>
-                                Send OTP
+                            <div className="space-y-3">
+                                <label className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider px-1" htmlFor="password">
+                                    Password
+                                </label>
+                                <div className="relative flex items-center group">
+                                    <input 
+                                        className="w-full bg-surface-container-low border border-white/10 rounded-xl px-4 py-4 text-on-background placeholder:text-white/20 focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all outline-none text-lg" 
+                                        id="password" 
+                                        placeholder="Enter your password" 
+                                        
+                                        type="password" 
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                            <button className="w-full bg-primary-container text-white font-bold py-4.5 rounded-xl shadow-lg shadow-primary-container/20 spring-interaction hover:brightness-110 active:brightness-90 transition-all mt-6 text-lg" type="submit">
+                                Login
                             </button>
                         </form>
                     </div>
