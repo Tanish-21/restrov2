@@ -8,6 +8,7 @@ import Order from './pages/dashboard/Order';
 import Search from './pages/dashboard/Search';
 import Profile from './pages/dashboard/Profile';
 import './index.css';
+import ProtectedRoutes from './components/ProtectedRoutes';
 
 export default function App() {
   return (
@@ -15,10 +16,28 @@ export default function App() {
       <Route path="/" element={<Entry />} />
       <Route path="/login" element={<Login />} />
       <Route path="/verify" element={<Verify />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/order" element={<Order />} />
-      <Route path="/search" element={<Search />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/home" 
+        element={
+          <ProtectedRoutes>
+            <Home />
+          </ProtectedRoutes>
+        }
+      />
+      <Route path="/order" element={
+        <ProtectedRoutes>
+          <Order />
+        </ProtectedRoutes>
+      } />
+      <Route path="/search" element={
+        <ProtectedRoutes>
+          <Search />
+        </ProtectedRoutes>
+      } />
+      <Route path="/profile" element={
+        <ProtectedRoutes>
+          <Profile />
+        </ProtectedRoutes>
+      } />
     </Routes>
   );
 }
