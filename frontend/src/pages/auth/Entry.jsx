@@ -32,7 +32,7 @@ const Entry = () => {
 </div>
 <div className="mt-stack-lg w-full max-w-xs animate-fade-delayed" style={{ animationDelay: '0.8s' }}>
 <button 
-    onClick={() => navigate('/login')}
+    onClick={() => navigate('/verify')}
     className="group relative w-full bg-primary-container py-5 rounded-xl font-headline-md text-white overflow-hidden active:scale-95 transition-transform duration-300 shadow-[0_20px_40px_rgba(255,95,31,0.3)]">
 <span className="relative z-10 flex items-center justify-center gap-2">
                         Get Started

@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Entry from './pages/auth/Entry';
 import Login from './pages/auth/Login';
-import Verify from './pages/auth/Verify';
+import Register from './pages/auth/Register';
 import Home from './pages/dashboard/Home';
 import Order from './pages/dashboard/Order';
 import Search from './pages/dashboard/Search';
@@ -15,7 +15,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Entry />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/verify" element={<Verify />} />
+      <Route path="/verify" element={<Register />} />
       <Route path="/home" 
         element={
           <ProtectedRoutes>

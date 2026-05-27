@@ -55,17 +55,18 @@ router.post('/register', async (req, res) => {
     try{
         const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
-        if (existingUser.rows.length > 0) {
+        const exuser = existingUser.rows[0];
+        
+        if (exuser) {
             return res.status(400).json({ message: 'User already exists' });
         }
 
         const result = await pool.query(
-            'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
             [name, email, password]
         );
 
-        const user = result.rows[0];
-        res.status(201).json({ message: 'User registered successfully', success: true, user });
+        res.status(201).json({ message: 'User registered successfully', success: true });
     } catch (err) {
         console.error('Database error:', err);
         res.status(500).json({ message: 'Internal server error' });
