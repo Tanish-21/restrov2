@@ -3,6 +3,8 @@ import pool from '../config/db.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import verify from '../middleware/authmiddleware.js';
+import bcrypt from 'bcrypt';
+
 dotenv.config();
 
 const router = express.Router();
@@ -14,6 +16,7 @@ router.post('/login', async (req, res) => {
         return res.status(400).json({ message: 'Email and password are required' });
     }
 
+
     console.log('Login attempt:', email);
     try{
         const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -24,7 +27,9 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'User not Found' });
         }
 
-        if (user.password !== password) {
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch){
             return res.status(401).json({ message: 'Invalid password' });
         }
 
@@ -52,6 +57,9 @@ router.post('/register', async (req, res) => {
     if (!name || !email || !password) {
         return res.status(400).json({ message: 'Name, email and password are required' });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     try{
         const existingUser = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
@@ -60,8 +68,8 @@ router.post('/register', async (req, res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-            [name, email, password]
+            'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
+            [name, email, hashedPassword]
         );
 
         const user = result.rows[0];

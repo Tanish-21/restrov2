@@ -2,10 +2,26 @@ import React from "react";
 import TopNav from "../../components/TopNav";
 import Botton from "../../components/Botton";
 import { useNavigate } from "react-router-dom";
-import Foods from "../../components/Foods";
-
+import Trending from "../../components/Trending";
+import { useEffect } from "react";
 export default function Home() {
     const navigate = useNavigate();
+    const [categories, setCategories] = useState([]);
+    const [activeCategory, setActiveCategory] = useState(null);
+
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/api/categories`)
+            setCategories(response.data);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    };
     return (
         <div className="bg-black min-h-screen text-white">
             <TopNav />
@@ -23,44 +39,29 @@ export default function Home() {
                 </section>
 
                 <section>
-                    <div className="flex items-center justify-between mb-stack-lg">
+                    <div className="flex items-center justify-between mb-4">
                         <h2 className="font-headline-md text-headline-md text-on-surface">Categories</h2>
-                        <span className="text-orange-500 font-label-md cursor-pointer hover:underline">View All</span>
                     </div>
-                    <div className="flex gap-gutter overflow-x-auto pb-4 -mx-container-padding px-container-padding scroll-smooth no-scrollbar">
-                        <div className="flex-shrink-0 group cursor-pointer text-center">
-                            <div className="w-24 h-24 rounded-full overflow-hidden mb-stack-sm border-2 border-transparent group-hover:border-orange-500 transition-all duration-300 active:scale-90">
-                                <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCp4nUDrgJRP0C6bn2Bz05zOx1pmDw_6VTDktmW4SPMebJvcZqLz19DNjLssq-UjRGoKv_gM-k_tiFNho4mCOioYZ32C98RDfRT-VdWFMO6qocDTUSPms5Ez6ZI-FR3uX6dVLwmc4nMO6VxkhetbBWnzd61fYRDW7uhC68tuzypKCdRcixazGkJQYLnfdJbYzSmLavwvgmXIdcxq4d1uppo9Dv_ARSV04MwFnegsEx87gn83JjEagkFtrAe45HkB_MNQbPbWM8NCHs" alt="Italian" />
-                            </div>
-                            <p className="font-label-md text-on-surface-variant group-hover:text-orange-500 transition-colors">Italian</p>
-                        </div>
-                        <div className="flex-shrink-0 group cursor-pointer text-center">
-                            <div className="w-24 h-24 rounded-full overflow-hidden mb-stack-sm border-2 border-orange-500 bg-orange-500/10 transition-all duration-300 active:scale-90">
-                                <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXqNZdLIOS4bZ9XPwiGprI2UPFBiFHUSR6io-lQHh22ax1KvgfrSbYYwzh_ZOsCBuq7N3BO4fM3IqrWfpVy4Hk7nTwfBmZk6okJ5D8hHLLW0tW3MseYv96lNGXDKR1vFfLZr_mtXTPUVTskABaL07ftQPL2m0G8DlDNl84CB0NAKlF-WV9NIsch_aKjKlxsR7D-DAM9qp2LXIjLO9YGi5GIQmq4WadGidEcLw7P-h9qy__vOxjcWdlLq0ydozeEgOoIm32J5lqVKI" alt="Sushi" />
-                            </div>
-                            <p className="font-label-md text-orange-500">Sushi</p>
-                        </div>
-                        <div className="flex-shrink-0 group cursor-pointer text-center">
-                            <div className="w-24 h-24 rounded-full overflow-hidden mb-stack-sm border-2 border-transparent group-hover:border-orange-500 transition-all duration-300 active:scale-90">
-                                <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8ndVwBGDSy9Ek92fQjAXm2v8A7B01bqBhyNi2frwS9E9w8SF-c1TTG2eP470HjlqwOVbzBgrl-DwULKHljx9v35tyGWbmkWIjdLMh3T8leUHaAialrNtrk342RuK_fiWSAWQIYp6gvxVo8EfKjkXpbA15bg5YMd5mVlzt4rVCJqMjf8obOk-rV-f7B6y0XGxodIQDpV-Tis6RZVqGr8hqUFAZKhR_Mu4d6eobi_ivVYqGyO3Bg1bvh-pck0d6gPsLM7LzrAUchXo" alt="Burgers" />
-                            </div>
-                            <p className="font-label-md text-on-surface-variant group-hover:text-orange-500 transition-colors">Burgers</p>
-                        </div>
-                        <div className="flex-shrink-0 group cursor-pointer text-center">
-                            <div className="w-24 h-24 rounded-full overflow-hidden mb-stack-sm border-2 border-transparent group-hover:border-orange-500 transition-all duration-300 active:scale-90">
-                                <img className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrGPPFyYEXc8lwBqR2wtFbFdyTmq2uWnRXasFnyCfcznMux2sxaWJKcdzHpRxrOBfwFd4aS25ovu_OGqBuJaMZyWvzgMUnFaPhs5CQGNo5I3c14M0gsN-VC4iorMn-6WG9jYE5hJ_dM5w3xeracDvhXBkYPmRGF9PYiZnIpBOsbvNOcDqk1GsXvg6kKc0lbKNgydTaCi3xGUNzejMbIi_8pyF2ZdZh6gbPMpw7iEzPwqpMX5LxnC6K5vOrfg9JqYH-fyXzU220MfU" alt="Steaks" />
-                            </div>
-                            <p className="font-label-md text-on-surface-variant group-hover:text-orange-500 transition-colors">Steaks</p>
-                        </div>
+
+                    <div className="flex gap-2 overflow-x-auto pb-2 -mx-container-padding px-container-padding scroll-smooth no-scrollbar">
+                        {categories.map(category => (
+                            <button
+                                key={category.id}
+                                onClick={() => handleCategoryClick(category.id)}
+                                className={`flex-shrink-0 py-3 px-6 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer active:scale-95 border ${activeCategory === category.id ? 'bg-orange-500 border-orange-500 text-white shadow-lg shadow-orange-500/20' : 'bg-white/5 border-white/5 text-neutral-400 hover:bg-white/10 hover:text-white'}`}
+                            >
+                                {category.name}
+                            </button>
+                        ))}
                     </div>
                 </section>
 
                 <section className="space-y-stack-lg">
                     <div className="flex items-center justify-between">
                         <h2 className="font-headline-md text-headline-md text-on-surface">Trending Now</h2>
-                    </div>  
+                    </div>
                     <div className="grid gap-stack-lg">
-                        <Foods />
+                        <Trending />
                     </div>
                 </section>
 

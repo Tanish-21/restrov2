@@ -7,17 +7,17 @@ import Home from './pages/dashboard/Home';
 import Order from './pages/dashboard/Order';
 import Search from './pages/dashboard/Search';
 import Profile from './pages/dashboard/Profile';
-import Foods from './components/Foods';
 import './index.css';
 import ProtectedRoutes from './components/ProtectedRoutes';
+import Dashboard from './pages/admin/Dashboard';
 
 export default function App() {
   return (
     <Routes>
+      <Route path="/admin" element={<Dashboard />} />
       <Route path="/" element={<Entry />} />
       <Route path="/login" element={<Login />} />
       <Route path="/verify" element={<Verify />} />
-      <Route path="/cards" element={<Foods />} />
       <Route path="/home" 
         element={
           <ProtectedRoutes>
