@@ -16,7 +16,7 @@ export default function Home() {
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/api/categories`)
+            const response = await fetch(`${import.meta.env.BACKEND_API}/api/categories`)
             setCategories(response.data);
         } catch (error) {
             console.error('Error fetching categories:', error);
