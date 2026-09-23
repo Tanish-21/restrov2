@@ -44,7 +44,7 @@ function Dashboard() {
     const fetchFoods = async () => {
         setLoadingFoods(true);
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_API}/api/foods/cards`);
+            const response = await fetch(`${import.meta.env.BACKEND_API}/api/foods/cards`);
             const data = await response.json();
             if (response.ok) {
                 const fetchedFoods = data.data || [];

@@ -12,7 +12,7 @@ export default function Foods() {
       try {
 
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_API}/api/foods/cards`
+          `${import.meta.env.BACKEND_API}/api/foods/cards`
         );
 
         const data = await response.json();
