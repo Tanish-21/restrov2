@@ -11,7 +11,7 @@ function Trending() {
         try {
   
           const response = await fetch(
-            `${import.meta.env.VITE_BACKEND_API}/api/foods/trending`
+            `${import.meta.env.BACKEND_API}/api/foods/trending`
           );
   
           const data = await response.json();
