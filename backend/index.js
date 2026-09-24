@@ -8,7 +8,10 @@ import catRoute from './routes/cat.js';
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "http:restrov2.vercel.app",
+    credentials: true
+}));
 
 dotenv.config();
 
