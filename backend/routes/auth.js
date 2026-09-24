@@ -95,7 +95,7 @@ router.post('/register', async (req, res) => {
             }
         );
 
-        res.status(201).json({ message: 'User registered successfully', success: true, token, user: user.username });
+        res.status(201).json({ message: 'User registered successfully', success: true, token, user: user.username, role: user.role });
     } catch (err) {
         console.error('Database error:', err);
         res.status(500).json({ message: 'Internal server error' });

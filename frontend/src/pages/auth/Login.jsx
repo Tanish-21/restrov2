@@ -37,10 +37,14 @@ const Login = () => {
                 if (data.token) {
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("user", data.user || name || "User");
+                    if (data.role) {
+                        localStorage.setItem("role", data.role);
+                    }
                 }
-                if(data.role == 'admin'){
+                const userRole = (data.role || localStorage.getItem("role") || "").toLowerCase();
+                if (userRole === 'admin') {
                     navigate("/admin");
-                }else{
+                } else {
                     navigate("/home");
                 }
             } else {
