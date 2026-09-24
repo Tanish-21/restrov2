@@ -9,7 +9,7 @@ import catRoute from './routes/cat.js';
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: "http:restrov2.vercel.app",
+    origin: "https://restrov2.vercel.app/login",
     credentials: true
 }));
 
