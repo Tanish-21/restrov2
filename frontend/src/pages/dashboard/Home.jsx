@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TopNav from "../../components/TopNav";
 import Botton from "../../components/Botton";
 import { useNavigate } from "react-router-dom";
 import Trending from "../../components/Trending";
-import { useEffect } from "react";
+
+const API_BASE = import.meta.env.VITE_BACKEND_API || import.meta.env.BACKEND_API || 'http://localhost:5000';
+
 export default function Home() {
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-
 
     useEffect(() => {
         fetchCategories();
@@ -16,11 +17,18 @@ export default function Home() {
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch(`${import.meta.env.BACKEND_API}/api/categories`)
-            setCategories(response.data);
+            const response = await fetch(`${API_BASE}/api/categories`);
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                setCategories(data);
+            }
         } catch (error) {
             console.error('Error fetching categories:', error);
         }
+    };
+
+    const handleCategoryClick = (id) => {
+        setActiveCategory(activeCategory === id ? null : id);
     };
     return (
         <div className="bg-black min-h-screen text-white">

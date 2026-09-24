@@ -15,12 +15,6 @@ export default function AdminHeader({
             <header className="sticky top-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/5 px-6 py-4 shadow-2xl">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <button 
-                            onClick={() => navigate('/home')} 
-                            className="material-symbols-outlined text-neutral-400 hover:text-white transition-colors cursor-pointer active:scale-90"
-                        >
-                            arrow_back
-                        </button>
                         <span className="material-symbols-outlined text-orange-500 font-variation-settings-'FILL'1">restaurant_menu</span>
                         <div>
                             <span className="text-lg font-black tracking-tight text-white uppercase font-epilogue">Lumina Kitchen</span>

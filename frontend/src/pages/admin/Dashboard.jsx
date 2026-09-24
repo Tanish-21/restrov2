@@ -7,17 +7,19 @@ import FoodForm from './components/FoodForm';
 import FoodPreview from './components/FoodPreview';
 import ManageMenu from './components/ManageMenu';
 
+const API_BASE = import.meta.env.VITE_BACKEND_API || import.meta.env.BACKEND_API || 'http://localhost:5000';
+
 function Dashboard() {
     const navigate = useNavigate();
-    
+
     // Tab switching state
     const [activeTab, setActiveTab] = useState('create'); // 'create' | 'manage'
-    
+
     // Categories state
     const [categories, setCategories] = useState(['Italian', 'Sushi', 'Burgers', 'Steaks']);
     const [newCategory, setNewCategory] = useState('');
     const [showAddCategoryInput, setShowAddCategoryInput] = useState(false);
-    
+
     // Form and Editing state
     const [editingId, setEditingId] = useState(null);
     const [formData, setFormData] = useState({
@@ -44,12 +46,12 @@ function Dashboard() {
     const fetchFoods = async () => {
         setLoadingFoods(true);
         try {
-            const response = await fetch(`${import.meta.env.BACKEND_API}/api/foods/cards`);
+            const response = await fetch(`${API_BASE}/api/foods/cards`);
             const data = await response.json();
             if (response.ok) {
                 const fetchedFoods = data.data || [];
                 setFoods(fetchedFoods);
-                
+
                 // Add any categories present in foods but missing from our list
                 fetchedFoods.forEach(food => {
                     if (food.category && !categories.includes(food.category)) {
@@ -107,16 +109,16 @@ function Dashboard() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        
+
         // Simulating form submit / edit feedback
         setTimeout(() => {
             setIsSubmitting(false);
-            
+
             if (editingId) {
                 alert(`🎉 "${formData.name || 'Food item'}" updated successfully!`);
                 // Update local state list
-                setFoods(prev => prev.map(f => f.id === editingId ? { 
-                    ...f, 
+                setFoods(prev => prev.map(f => f.id === editingId ? {
+                    ...f,
                     name: formData.name,
                     description: formData.description,
                     price: formData.price,
@@ -194,17 +196,17 @@ function Dashboard() {
 
     // Filters for list view
     const filteredFoods = foods.filter(food => {
-        const matchesSearch = food.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                              food.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                              food.category?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = food.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            food.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            food.category?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategoryFilter === 'All' || food.category === selectedCategoryFilter;
         return matchesSearch && matchesCategory;
     });
 
     return (
         <div className="min-h-screen bg-black text-white bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-black to-black font-sans pb-16">
-            
-            <AdminHeader 
+
+            <AdminHeader
                 navigate={navigate}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
@@ -215,12 +217,12 @@ function Dashboard() {
             />
 
             <main className="max-w-7xl mx-auto px-6 pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
+
                 {/* CREATE/EDIT VIEW */}
                 {activeTab === 'create' && (
                     <>
                         <div className="lg:col-span-7 space-y-6">
-                            <FoodForm 
+                            <FoodForm
                                 foods={foods}
                                 formData={formData}
                                 categories={categories}
@@ -240,7 +242,7 @@ function Dashboard() {
                             />
                         </div>
 
-                        <FoodPreview 
+                        <FoodPreview
                             formData={formData}
                             previewImage={previewImage}
                         />
@@ -249,7 +251,7 @@ function Dashboard() {
 
                 {/* MANAGE VIEW */}
                 {activeTab === 'manage' && (
-                    <ManageMenu 
+                    <ManageMenu
                         foods={foods}
                         loadingFoods={loadingFoods}
                         searchTerm={searchTerm}

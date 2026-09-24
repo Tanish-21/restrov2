@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+const API_BASE = import.meta.env.VITE_BACKEND_API || import.meta.env.BACKEND_API || 'http://localhost:5000';
+
 export default function Foods() {
 
   const [foods, setFoods] = useState([]);
@@ -12,7 +14,7 @@ export default function Foods() {
       try {
 
         const response = await fetch(
-          `${import.meta.env.BACKEND_API}/api/foods/cards`
+          `${API_BASE}/api/foods/cards`
         );
 
         const data = await response.json();
