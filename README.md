@@ -166,6 +166,7 @@ cd restrov2
 3. Create a `.env` file in the `frontend/` directory:
    ```env
    VITE_BACKEND_API=http://localhost:5000
+   BACKEND_API=http://localhost:5000
    ```
 4. Start the frontend development server:
    ```bash
