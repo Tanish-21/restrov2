@@ -135,11 +135,7 @@ cd restrov2
    ```
 3. Create a `.env` file in the `backend/` directory:
    ```env
-   DB_USER=postgres
-   DB_PASSWORD=your_postgres_password
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_NAME=restrov1
+   DATABASE_URL=database_connection_string
    BACKEND_PORT=5000
    JWT_SECRET=your_jwt_secret_key
    ```
